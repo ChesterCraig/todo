@@ -1,6 +1,5 @@
 const express = require('express');
 const bodyParser = require("body-parser");
-
 const {client} = require("./db/pg");
 
 
@@ -12,19 +11,9 @@ var port = process.env.PORT || 8080;
 
 //Define path where public files live (client facing website)
 const publicPath = __dirname + "/Public";
-console.log("Servince public dir: " + publicPath);
 
 //body parser middleware
 app.use(bodyParser.json());
-
-
-// //Middleware to log all requests
-// app.use((req,res,next) => {
-//     var msg = `${new Date().toString()}: ${req.method} ${req.url}`;
-//     console.log(msg);
-//     next();
-// });
-
 
 //Setup middleware to serve up anything in public folder (including our main website)
 app.use(express.static(publicPath));

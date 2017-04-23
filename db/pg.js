@@ -25,7 +25,6 @@ client.initTodoSchema = function (callback) {
     qry = qry + "completed boolean ";
     qry = qry + ")";
 
-
     var query = client.query(qry, function(error, result){
         if (error){
             console.log('Failed to run init schema query. Server not started.');

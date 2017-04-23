@@ -1,4 +1,4 @@
-const baseUrl = "http://localhost:8080";
+const baseUrl = window.location.origin; //"http://localhost:8080";
 
 $(document).ready(function(e) {
     var $selectedTask = undefined;
@@ -13,13 +13,6 @@ $(document).ready(function(e) {
         placeholder : 'ui-state-highlight',
         cancel : '.delete,.done', //exlude these child elements from the dragging beheaviour
         receive: function( event, ui ) {
-            //Update server when todo is moved accross lists
-            //console.log("Event:",event);
-            //console.log("ui:",ui);
- 
-            console.log("selected li: " + ui.item[0].id);
-            console.log("Parent ul list: " + $('#' + ui.item[0].id).parent().attr('id'));
-
             if ($('#' + ui.item[0].id).parent().attr('id') === 'completed-list') {
                 updateTask(ui.item[0].id,{completed: true});  //Completed
              } else {
@@ -101,10 +94,6 @@ $(document).ready(function(e) {
     $('#edit-todo').dialog({
         modal : true, autoOpen : false, buttons : {
         "Confirm " : function () {
-            //Need to stop users from being able to update with nothing
-            console.log("Modify todo to new val " + $('#editingTask').val());
-
-            //$selectedTask.find('.task').text($('#editingTask').val()); //update task with new name
             updateTask($selectedTask.attr('id'),{item: $('#editingTask').val()});
             $selectedTask = undefined;
             $(this).dialog('close');
@@ -217,5 +206,10 @@ function ajaxFail(data) {
 };
 
 /*
-Bug: clicking enter when new task dialog is open completely wipes the page, need to change default form submission behaviour to do 'Confirm' button instead
+Bugs: 
+
+-clicking enter when new task dialog is open completely wipes the page, need to change default form submission behaviour to do 'Confirm' button instead
+
+-Users cannot create a todo with an empty string but they can try modify a todo to an empty string
+
 */
