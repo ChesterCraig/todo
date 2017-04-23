@@ -1,0 +1,10 @@
+//Curl based tests
+
+/*
+END POINTS:
+GET /todos      gets all todos in array of todo objects
+GET /todo/12    gets specific todo object in a array
+POST /todos     creates a new todo. details of todo must be in body as JSON
+PUT /todo/12    updates/replaces the todo. details must be in body as JSON
+DELETE /todo/12 deletes the todo
+*/
