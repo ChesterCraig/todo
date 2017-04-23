@@ -11,7 +11,7 @@ var app = express();
 var port = process.env.PORT || 8080;
 
 //Define path where public files live (client facing website)
-const publicPath = __dirname + "/public";
+const publicPath = __dirname + "/Public";
 console.log("Servince public dir: " + publicPath);
 
 //body parser middleware
