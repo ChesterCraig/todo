@@ -149,12 +149,6 @@ app.delete('/todo/:id', function(request, response){
     }
 });
 
-//Deal with all other misc get requests
-app.get('*',function (request, response) {
-    response.status(404).send();
-}); 
-
-
 //Initalise schema if required and start server
 client.initTodoSchema(() => {        
     //Start web server
