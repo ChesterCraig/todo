@@ -17,16 +17,18 @@ const publicPath = __dirname + "/public";
 app.use(bodyParser.json());
 
 
+//Middleware to log all requests
+app.use((req,res,next) => {
+    var msg = `${new Date().toString()}: ${req.method} ${req.url}`;
+    console.log(msg);
+    next();
+});
+
+
 //Setup middleware to serve up anything in public folder (including our main website)
 app.use(express.static(publicPath));
 
 
-// //Middleware to log all requests
-// app.use((req,res,next) => {
-//     var msg = `${new Date().toString()}: ${req.method} ${req.url}`;
-//     console.log(msg);
-//     next();
-// });
 
 
 //========API=======
@@ -35,7 +37,7 @@ app.get('/todos', (request,response) => {
     console.log("Get all todos");
     var query = client.query("SELECT id, item, completed FROM todo"); 
     var results = [];
-    // Stream resultcls back one row at a time into array
+    // Stream resultscl back one row at a time into array
     query.on('row', function(row) {
         results.push(row); 
     });
