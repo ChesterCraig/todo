@@ -52,7 +52,7 @@ app.get('/todo/:id', (request,response) => {
             response.json(results); 
         });
     } else {
-        return response.status(404).send("todo ID is invalid");
+        return response.status(400).send("todo ID is invalid");
     }
 });
 
@@ -61,8 +61,8 @@ app.post('/todos', function(request, response){
     //body parser used 
     console.log("Create todo with data", request.body);
       if (request.body.item) {
-         var query = client.query(`INSERT INTO todo (item,completed) VALUES ('${request.body.item}',False) RETURNING id, item, completed`);
-         var results = [];
+        var query = client.query(`INSERT INTO todo (item,completed) VALUES ('${request.body.item}',False) RETURNING id, item, completed`);
+        var results = [];
     
         // Stream results back one row at a time 
         query.on('row', function(row) {
@@ -74,7 +74,7 @@ app.post('/todos', function(request, response){
             response.json(results); 
         });
     } else {
-        return response.status(404).send("Invalid todo item value provided.");
+        return response.status(400).send("Todo item value invalid");
     }
 });
 
@@ -98,9 +98,11 @@ app.put('/todo/:id', function(request, response){
         //trim extra comma
         qryString = qryString.substring(0,qryString.length - 1);
         qryString = qryString + ` WHERE id = ${request.params.id}`;
-        var query = client.query(qryString, function(error, result){
+        
+        //var query = client.query(qryString, function(error, result){
+        client.query(qryString, function(error, result){
             if (error){
-                return response.status(404).send(`Failed to update todo: ${request.params.id} ${ error}`);
+                return response.status(500).send(`Failed to update todo: ${request.params.id} ${error}`);
             } else {
                 
                 //SEND UPDATED JSON TODO BACK
@@ -119,7 +121,7 @@ app.put('/todo/:id', function(request, response){
             }
         });
     } else {
-        return response.status(404).send("todo ID is invalid");
+        return response.status(400).send("Todo ID is invalid");
     }
 });
 
@@ -130,11 +132,11 @@ app.delete('/todo/:id', function(request, response){
 	if ((request.params.id) && (request.params.id > 0)) {
         var query = client.query(`DELETE FROM todo WHERE id = ${request.params.id}`, function(error, result) {
             if (error){
-                return response.status(404).send("Failed to delete todo: " + error);
+                return response.status(500).send("Failed to delete todo: " + error);
             }
         });       
     } else {
-        return response.status(404).send("todo ID is invalid");
+        return response.status(400).send("Todo ID is invalid");
     }
 });
 

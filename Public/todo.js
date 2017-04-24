@@ -94,7 +94,13 @@ $(document).ready(function(e) {
     $('#edit-todo').dialog({
         modal : true, autoOpen : false, buttons : {
         "Confirm " : function () {
-            updateTask($selectedTask.attr('id'),{item: $('#editingTask').val()});
+            var taskName = $('#editingTask').val();
+                if (taskName === '') { 
+                    // abort if user provides an invalid todo description
+                    return false; 
+                }
+
+            updateTask($selectedTask.attr('id'),{item: taskName});
             $selectedTask = undefined;
             $(this).dialog('close');
         },
@@ -204,12 +210,3 @@ function ajaxSuccess(data) {
 function ajaxFail(data) {
 	console.log('Fail.', data);
 };
-
-/*
-Bugs: 
-
--clicking enter when new task dialog is open completely wipes the page, need to change default form submission behaviour to do 'Confirm' button instead
-
--Users cannot create a todo with an empty string but they can try modify a todo to an empty string
-
-*/
