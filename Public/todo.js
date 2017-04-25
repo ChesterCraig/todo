@@ -68,7 +68,6 @@ $(document).ready(function(e) {
         modal : true, autoOpen : false, buttons : {
         "Confirm " : function () {
             //Send delete command to server
-            console.log("Requesting to remove: " + $selectedTask.attr('id'));
             removeTask($selectedTask.attr('id'));
             $selectedTask.effect('puff', function() { 
                 $(this).remove(); 
@@ -208,5 +207,5 @@ function ajaxSuccess(data) {
 };
 
 function ajaxFail(data) {
-	console.log('Fail.', data);
+	console.log('AJAX request failed: ', data);
 };

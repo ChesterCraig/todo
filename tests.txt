@@ -1,5 +1,4 @@
 //Curl based tests
-
 /*
 END POINTS:
 GET /todos      gets all todos in array of todo objects
@@ -8,3 +7,47 @@ POST /todos     creates a new todo. details of todo must be in body as JSON
 PUT /todo/12    updates/replaces the todo. details must be in body as JSON
 DELETE /todo/12 deletes the todo
 */
+
+
+curl -X GET \
+  http://localhost:8080/todos
+
+//EXAMPLE AGAINST HEROKU APP
+curl -X GET \
+    https://todo-nwen304.herokuapp.com/todos
+
+curl -X GET \
+  http://localhost:8080/todo/1
+
+curl -X POST \
+  http://localhost:8080/todos \
+  -H 'content-type: application/json' \
+  -d '{
+	"item": "find tea 22"
+}'
+
+curl -X PUT \
+  http://localhost:8080/todo/1 \
+  -H 'content-type: application/json' \
+  -d '{
+	"completed": true
+}'
+
+curl -X PUT \
+  http://localhost:8080/todo/1 \
+  -H 'content-type: application/json' \
+  -d '{
+	"completed": false,
+    "item": "fix all the bugs"
+}'
+
+curl -X PUT \
+  http://localhost:8080/todo/1 \
+  -H 'content-type: application/json' \
+  -d '{
+    "item": "fix a few of the bugs"
+}'
+
+curl -X DELETE \
+  http://localhost:8080/todo/1 \
+  -H 'cache-control: no-cache'

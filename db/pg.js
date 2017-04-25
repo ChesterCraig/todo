@@ -15,7 +15,12 @@ console.log(`Database connection: ${connectionString}`);
 
 //Parse configuration file containing info needed to connect to database
 var client = new pg.Client(connectionString); 
-client.connect();
+client.connect((error) => {
+    if (error) {
+        console.log(`Failed to connect to database: ${connectionString}`,error);
+        throw error;
+    }
+});
 
 client.initTodoSchema = function (callback) {
     //Setup table in database if not setup
