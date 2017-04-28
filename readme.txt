@@ -1,13 +1,15 @@
 readme.
 
+Heroku version is available:
+https://todo-nwen304.herokuapp.com/
+
+
+
 This is node js based todo list application.
 All client code and publicly accessable files sit under the Public dir.
 
 Database:
 The connection to the databse is handled through a seperate js file sitting under the db dir. Inside here you will find a config.txt file containing one JSON file. This JSON file can be used to define the database connection strings required to connect to your database. If the application is run from an environment where the following variable is available (such as Heroku) process.env.DATABASE_URL then it will opt to use this instead of the credentials stored in db/config.txt. I did not create a postgres database on the ECS machines, instead I created a database locally on my personal laptop and then another hosted in Heroku (Aaron indicated this was acceptable). When the server application is run it will stand up a todo schema if it doesn't already exists before servicing client requests.
-
-Heroku version is available:
-https://todo-nwen304.herokuapp.com/
 
 The application works in the same manner as the original todo list design.
 With the excepetion of dragging todos from one list to another, changes are requested against the server and when the server responds with the updated todo to re-render/update on the client side. Each todo is identified by the id on the LI on the client side which matches the id in the database.
